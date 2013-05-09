@@ -94,6 +94,9 @@ class PluginName {
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
+		// Load the Github Updater for non-WP repository plugins
+		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
+
 	    /*
 	     * TODO:
 	     * 
@@ -266,6 +269,44 @@ class PluginName {
 	public function filter_method_name() {
 	    // TODO:	Define your filter method here
 	} // end filter_method_name
+
+	/**
+	 * Check the plugin GitHub repository for updates.
+	 *
+	 * @todo Change the plugin-folder-name
+	 * @todo Change each instance of 'user' to your Github username
+	 * @todo Change each instance of 'repository' to the repository name
+	 */
+	public function github_updater() {
+
+		include_once 'vendor/updater.php';
+
+		/**
+		 * Leave the following definition set to false until you are testing the update feature.
+		 * Return to false when you are ready to distribute.
+		 */
+		define( 'WP_GITHUB_FORCE_UPDATE', false );
+
+		if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
+
+		$config = array(
+			'slug'               => plugin_basename( __FILE__ ),
+			'proper_folder_name' => 'plugin-folder-name',
+			'api_url'            => 'https://api.github.com/repos/user/repository',
+			'raw_url'            => 'https://raw.github.com/user/repository/master',
+			'github_url'         => 'https://github.com/user/respoitory',
+			'zip_url'            => 'https://github.com/user/repository/zipball/master',
+			'sslverify'          => true,
+			'requires'           => '3.0',
+			'tested'             => '3.3',
+			'readme'             => 'README.txt',
+		);
+
+		$updater = new WP_GitHub_Updater( $config );
+
+		}
+
+	}
 
 } // end class
 

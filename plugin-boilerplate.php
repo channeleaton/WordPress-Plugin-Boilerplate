@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: TODO
+Plugin Name: Plugin Boilerplate
 Plugin URI: TODO
 Description: TODO
 Version: 0.1
@@ -37,6 +37,13 @@ License:
  *
  * @version	0.1
  */
+
+// Autoload the vendor classes
+spl_autoload_register( 'PluginName::vendor_autoload' );
+
+// Autoload the plugin classes
+spl_autoload_register( 'PluginName::plugin_autoload' );
+
 class PluginName {
 
 	/*--------------------------------------------*
@@ -70,11 +77,11 @@ class PluginName {
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'plugin_textdomain' ) );
 
-	    /*
-	     * Add the options page and menu item.
-	     * Uncomment the following line to enable the Settings Page for the plugin:
-	     */
-	     //add_action( 'admin_menu', array( $this, 'plugin_admin_menu' ) );
+    /*
+     * Add the options page and menu item.
+     * Uncomment the following line to enable the Settings Page for the plugin:
+     */
+     // add_action( 'admin_menu', array( $this, 'plugin_admin_menu' ) );
 
 	    /*
 		 * Register admin styles and scripts
@@ -97,20 +104,20 @@ class PluginName {
 		// Load the Github Updater for non-WP repository plugins
 		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
 
-	    /*
-	     * TODO:
-	     * 
-	     * Define the custom functionality for your plugin. The first parameter of the
-	     * add_action/add_filter calls are the hooks into which your code should fire.
-	     *
-	     * The second parameter is the function name located within this class. See the stubs
-	     * later in the file.
-	     *
-	     * For more information:
-	     * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-	     */
-	    add_action( 'TODO', array( $this, 'action_method_name' ) );
-	    add_filter( 'TODO', array( $this, 'filter_method_name' ) );
+    /*
+     * TODO:
+     * 
+     * Define the custom functionality for your plugin. The first parameter of the
+     * add_action/add_filter calls are the hooks into which your code should fire.
+     *
+     * The second parameter is the function name located within this class. See the stubs
+     * later in the file.
+     *
+     * For more information:
+     * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
+     */
+    add_action( 'TODO', array( $this, 'action_method_name' ) );
+    add_filter( 'TODO', array( $this, 'filter_method_name' ) );
 
 	} // end constructor
 
@@ -191,7 +198,7 @@ class PluginName {
 	    
 			 $screen = get_current_screen();
 			 if ( $screen->id == $this->plugin_screen_slug ) {
-			 	wp_enqueue_script( 'plugin-name-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery' ) );
+			 	wp_enqueue_script( 'plugin-name-admin-script', plugins_url( 'js/admin.min.js', __FILE__ ), array( 'jquery' ) );
 			 } // end if
 	    
 	    } // end if
@@ -209,7 +216,7 @@ class PluginName {
 	 * Registers and enqueues plugin-specific scripts.
 	 */
 	public function register_plugin_scripts() {
-		wp_enqueue_script( 'plugin-name-plugin-script', plugins_url( 'js/display.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'plugin-name-plugin-script', plugins_url( 'js/display.min.js', __FILE__ ), array( 'jquery' ) );
 	} // end register_plugin_scripts
 
 	/**
@@ -279,13 +286,12 @@ class PluginName {
 	 */
 	public function github_updater() {
 
-		include_once 'vendor/updater.php';
-
 		/**
 		 * Leave the following definition set to false until you are testing the update feature.
 		 * Return to false when you are ready to distribute.
 		 */
-		define( 'WP_GITHUB_FORCE_UPDATE', false );
+		if ( ! defined( 'WP_GITHUB_FORCE_UPDATE' ) )
+			define( 'WP_GITHUB_FORCE_UPDATE', false );
 
 		if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
 
@@ -302,9 +308,35 @@ class PluginName {
 			'readme'             => 'README.txt',
 		);
 
-		$updater = new WP_GitHub_Updater( $config );
+		$updater = new Updater( $config );
 
 		}
+
+	}
+
+	public static function vendor_autoload( $classname ) {
+
+		$filename = dirname( __FILE__ ) .
+      DIRECTORY_SEPARATOR .
+      'vendor' . 
+      DIRECTORY_SEPARATOR .
+      str_replace( '_', DIRECTORY_SEPARATOR, $classname ) .
+      '.php';
+    if ( file_exists( $filename ) )
+      require $filename;
+
+	}
+
+	public static function plugin_autoload( $classname ) {
+
+		$filename = dirname( __FILE__ ) .
+      DIRECTORY_SEPARATOR .
+      'lib' . 
+      DIRECTORY_SEPARATOR .
+      str_replace( '_', DIRECTORY_SEPARATOR, $classname ) .
+      '.php';
+    if ( file_exists( $filename ) )
+      require $filename;
 
 	}
 

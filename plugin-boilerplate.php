@@ -90,25 +90,24 @@ class PluginName {
      * Add the options page and menu item.
      * Uncomment the following line to enable the Settings Page for the plugin:
      */
-	  add_action( 'admin_menu', array( $this, 'plugin_admin_menu' ) );
+	  // add_action( 'admin_menu', array( $this, 'plugin_admin_menu' ) );
 
-	    /*
+    /*
 		 * Register admin styles and scripts
 		 * If the Settings page has been activated using the above hook, the scripts and styles
 		 * will only be loaded on the settings page. If not, they will be loaded for all
 		 * admin pages. 
-		 *
-		 * add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
-		 * add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
 		 */
+		// add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
+		// add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
 
 		// Register site stylesheets and JavaScript
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_scripts' ) );
+		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_styles' ) );
+		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_scripts' ) );
 
 		// Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
-		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+		// register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		// register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
 		// Load the Github Updater for non-WP repository plugins
 		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );

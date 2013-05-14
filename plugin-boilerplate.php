@@ -1,15 +1,15 @@
 <?php
-/*
+/**
 Plugin Name: Plugin Boilerplate
-Plugin URI: TODO
-Description: TODO
+Plugin URI: @todo Add the URL to the plugin page (your site, GitHub, etc.)
+Description: @todo Describe the plugin
 Version: 0.1
-Author: TODO
-Author URI: TODO
-Author Email: TODO
+Author: @todo Enter author name
+Author URI: @todo Enter author's URL
+Author Email: @todo Enter author's email
 License:
 
-  Copyright 2013 TODO (email@domain.com)
+  Copyright 2013 @todo (email@domain.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License, version 2, as
@@ -27,9 +27,7 @@ License:
 */
 
 /**
- * TODO: 
- *
- * Rename this class to a proper name for your plugin. Give a proper description of
+ * @todo Rename this class to a proper name for your plugin. Give a proper description of
  * the plugin, it's purpose, and any dependencies it has.
  *
  * Use PHPDoc directives if you wish to be able to document the code using a documentation
@@ -39,9 +37,11 @@ License:
  */
 
 // Autoload the vendor classes
+// @todo Change 'PluginName' to your class name
 spl_autoload_register( 'PluginName::vendor_autoload' );
 
 // Autoload the plugin classes
+// @todo Change 'PluginName' to your class name
 spl_autoload_register( 'PluginName::plugin_autoload' );
 
 class PluginName {
@@ -52,6 +52,9 @@ class PluginName {
 	 
 	/** Refers to a single instance of this class. */
 	private static $instance = null;
+
+	/** The plugin version number */
+	private $version = '0.1';
 	
 	/** Refers to the slug of the plugin screen. */
 	private $plugin_screen_slug = null;
@@ -87,7 +90,7 @@ class PluginName {
 		add_action( 'init', array( $this, 'plugin_textdomain' ) );
 
 		// Load the meta boxes
-		add_action( 'init', array( $this, 'init_metaboxes' ) );
+		// add_action( 'init', array( $this, 'init_metaboxes' ) );
 
     /*
      * Add the options page and menu item.
@@ -115,10 +118,8 @@ class PluginName {
 		// Load the Github Updater for non-WP repository plugins
 		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
 
-    /*
-     * TODO:
-     * 
-     * Define the custom functionality for your plugin. The first parameter of the
+    /**
+     * @todo Define the custom functionality for your plugin. The first parameter of the
      * add_action/add_filter calls are the hooks into which your code should fire.
      *
      * The second parameter is the function name located within this class. See the stubs
@@ -135,32 +136,38 @@ class PluginName {
 	/**
 	 * Fired when the plugin is activated.
 	 *
+	 * @todo	Define activation functionality here
 	 * @param	boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
 	 */
 	public function activate( $network_wide ) {
-		// TODO:	Define activation functionality here
+
+
+
 	} // end activate
 
 	/**
 	 * Fired when the plugin is deactivated.
-	 *
+	 * @todo Define deactivation functionality here
 	 * @param	boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
 	 */
 	public function deactivate( $network_wide ) {
-		// TODO:	Define deactivation functionality here
+
+
+
 	} // end deactivate
 
 	/**
 	 * Loads the plugin text domain for translation
+	 *
+	 * @todo Replace 'plugin-name-locale' with a unique value for your plugin
 	 */
 	public function plugin_textdomain() {
 
-		// TODO: replace "plugin-name-locale" with a unique value for your plugin
 		$domain = 'plugin-name-locale';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 		
-        load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-        load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+      load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+      load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 
 	} // end plugin_textdomain
 
@@ -200,31 +207,37 @@ class PluginName {
 		 * and if it has, make sure only to enqueue the scripts on the relevant screens
 		 */
 		
-	    if ( isset( $this->plugin_screen_slug ) ){
-	    	
-	    	/*
+    if ( isset( $this->plugin_screen_slug ) ){
+    	
+    	/*
 			 * Check if current screen is the admin page for this plugin
 			 * Don't enqueue stylesheet or JavaScript if it's not
 			 */
 	    
-			 $screen = get_current_screen();
-			 if ( $screen->id == $this->plugin_screen_slug ) {
-			 	wp_enqueue_script( 'plugin-name-admin-script', plugins_url( 'js/admin.min.js', __FILE__ ), array( 'jquery' ) );
-			 } // end if
-	    
-	    } // end if
+			$screen = get_current_screen();
+			if ( $screen->id == $this->plugin_screen_slug ) {
+				wp_enqueue_script( 'plugin-name-admin-script', plugins_url( 'js/admin.min.js', __FILE__ ), array( 'jquery' ) );
+			} // end if
+    
+    } // end if
 
 	} // end register_admin_scripts
 
 	/**
 	 * Registers and enqueues plugin-specific styles.
+	 *
+	 * @todo Change 'plugin-name-plugin-styles' to something unique to the plugin
 	 */
 	public function register_plugin_styles() {
+
 		wp_enqueue_style( 'plugin-name-plugin-styles', plugins_url( 'css/display.css', __FILE__ ) );
+
 	} // end register_plugin_styles
 
 	/**
 	 * Registers and enqueues plugin-specific scripts.
+	 * 
+	 * @todo Change 'plugin-name-plugin-scripts' to something unique to the plugin
 	 */
 	public function register_plugin_scripts() {
 		wp_enqueue_script( 'plugin-name-plugin-script', plugins_url( 'js/display.min.js', __FILE__ ), array( 'jquery' ) );
@@ -236,7 +249,7 @@ class PluginName {
 	public function init_metaboxes() {
 
 		$meta = new Metaboxes();
-		
+
 		$meta_boxes = array();
 		$meta_boxes = apply_filters ( 'cmb_meta_boxes' , $meta_boxes );
 		foreach ( $meta_boxes as $meta_box ) {
@@ -247,16 +260,13 @@ class PluginName {
 
 	/**
 	 * Registers the administration menu for this plugin into the WordPress Dashboard menu.
+	 * 
+	 * @todo Change 'Page Settings' to the title of your plugin admin page
+	 * @todo Change 'update_core' to the required capability
+	 * @todo Change 'plugin-settings' to the slug of your plugin
 	 */
 	public function plugin_admin_menu() {
 	
-		/*
-  	 * TODO:
-  	 *
-  	 * Change 'Page Settings' to the title of your plugin admin page
-  	 * Change 'update_core' to the required capability
-  	 * Change 'plugin-settings' to the slug of your plugin
-  	 */
 		require( 'vendor/Settings.php' );
 
 		$this->wpsf = new Settings( $this->path . 'lib/plugin-settings.php' );
@@ -292,28 +302,36 @@ class PluginName {
 	 * Core Functions
 	 *---------------------------------------------*/
 
-	/*
+	/**
  	 * NOTE:  Actions are points in the execution of a page or process
 	 *        lifecycle that WordPress fires.
 	 *
 	 *		  WordPress Actions: http://codex.wordpress.org/Plugin_API#Actions
 	 *		  Action Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
+	 *		  
+	 * @todo Define your action method here
 	 *
 	 */
 	public function action_method_name() {
-    	// TODO:	Define your action method here
+
+
+
 	} // end action_method_name
 
-	/*
+	/**
 	 * NOTE:  Filters are points of execution in which WordPress modifies data
 	 *        before saving it or sending it to the browser.
 	 *
 	 *		  WordPress Filters: http://codex.wordpress.org/Plugin_API#Filters
 	 *		  Filter Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
+	 *		  
+	 * @todo Define your filter method here
 	 *
 	 */
 	public function filter_method_name() {
-	    // TODO:	Define your filter method here
+
+
+
 	} // end filter_method_name
 
 	/**
@@ -322,6 +340,8 @@ class PluginName {
 	 * @todo Change the plugin-folder-name
 	 * @todo Change each instance of 'user' to your Github username
 	 * @todo Change each instance of 'repository' to the repository name
+	 * @todo Change the 'requires' value if needed
+	 * @todo Change the 'tested' value to the WP version you are testing with
 	 */
 	public function github_updater() {
 
@@ -353,6 +373,11 @@ class PluginName {
 
 	}
 
+	/**
+	 * Autoloads classes in the 'vendor' directory
+	 * 
+	 * @param  string $classname The class name being autoloaded
+	 */
 	public static function vendor_autoload( $classname ) {
 
 		$filename = dirname( __FILE__ ) .
@@ -366,6 +391,11 @@ class PluginName {
 
 	}
 
+	/**
+	 * Autoloads classes in the 'lib' directory
+	 * 
+	 * @param  string $classname The class name being autoloaded
+	 */
 	public static function plugin_autoload( $classname ) {
 
 		$filename = dirname( __FILE__ ) .
@@ -381,5 +411,5 @@ class PluginName {
 
 } // end class
 
-// TODO:	Update the instantiation call of your plugin to the name given at the class definition
+// @todo Update the instantiation call of your plugin to the name given at the class definition
 PluginName::get_instance();

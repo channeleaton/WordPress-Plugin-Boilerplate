@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Creates the metaboxes throughout the plugin
+ */
 class Metaboxes {
 
 	public function __construct() {
@@ -8,6 +11,15 @@ class Metaboxes {
 
 	}
 
+	/**
+	 * Defines a set of metaboxes
+	 *
+	 * @todo Create your own metabox $prefix
+	 * @todo Define plugin metaboxes
+	 * @see https://github.com/jaredatch/Custom-Metaboxes-and-Fields-for-WordPress
+	 * @param  array  $metaboxes Existing metaboxes
+	 * @return array             More metaboxes!
+	 */
 	public function metaboxes( array $metaboxes ) {
 
 		$prefix = '_my_plugin_';

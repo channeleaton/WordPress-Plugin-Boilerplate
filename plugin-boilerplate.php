@@ -234,18 +234,18 @@ class PluginName {
 	public function plugin_admin_menu() {
 	
 		/*
-    	 * TODO:	
-    	 *
-    	 * Change 'Page Title' to the title of your plugin admin page
-    	 * Change 'Menu Text' to the text for menu item for the plugin settings page 
-    	 * Change 'plugin-name' to the name of your plugin
-    	 */
+  	 * TODO:
+  	 *
+  	 * Change 'Page Settings' to the title of your plugin admin page
+  	 * Change 'update_core' to the required capability
+  	 * Change 'plugin-settings' to the slug of your plugin
+  	 */
 		require( 'vendor/Settings.php' );
 
 		$this->wpsf = new Settings( $this->path . 'lib/plugin-settings.php' );
 
 		add_menu_page(
-			'plugin-settings',
+			'Plugin Settings',
 			'Plugin Settings',
 			'update_core',
 			'plugin-settings',
@@ -261,7 +261,7 @@ class PluginName {
 
 		ob_start();
 
-		$fields = $this->wpsf
+		$fields = $this->wpsf;
 		include_once( 'views/admin.php' );
 
 		$settings_page = ob_get_contents();

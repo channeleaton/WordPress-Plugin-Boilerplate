@@ -56,6 +56,12 @@ class PluginName {
 	/** Refers to the slug of the plugin screen. */
 	private $plugin_screen_slug = null;
 
+	/** Save the plugin path for easier retrieval */
+	private $path = null;
+
+	/** The Settings Framework object */
+	private $wpsf = null;
+
 	/*--------------------------------------------*
 	 * Constructor
 	 *--------------------------------------------*/
@@ -74,6 +80,9 @@ class PluginName {
 	 */
 	private function __construct() {
 
+		// Save the plugin path
+		$this->path = plugin_dir_path( __FILE__ );
+
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'plugin_textdomain' ) );
 
@@ -81,7 +90,7 @@ class PluginName {
      * Add the options page and menu item.
      * Uncomment the following line to enable the Settings Page for the plugin:
      */
-     // add_action( 'admin_menu', array( $this, 'plugin_admin_menu' ) );
+	  add_action( 'admin_menu', array( $this, 'plugin_admin_menu' ) );
 
 	    /*
 		 * Register admin styles and scripts
@@ -231,14 +240,17 @@ class PluginName {
     	 * Change 'Menu Text' to the text for menu item for the plugin settings page 
     	 * Change 'plugin-name' to the name of your plugin
     	 */
-    	
-    	$this->plugin_screen_slug = add_plugins_page( 
-    		__( 'Page Title', 'plugin-name-locale' ), 
-    		__( 'Menu Text', 'plugin-name-locale' ), 
-    		__( 'read', 'plugin-name-locale' ), 
-    		__( 'plugin-name', 'plugin-name-locale' ), 
-    		array( $this, 'plugin_admin_page' ) 
-    	);
+		require( 'vendor/Settings.php' );
+
+		$this->wpsf = new Settings( $this->path . 'lib/plugin-settings.php' );
+
+		add_menu_page(
+			'plugin-settings',
+			'Plugin Settings',
+			'update_core',
+			'plugin-settings',
+			array( $this, 'plugin_admin_page' )
+		);
     	
 	} // end plugin_admin_menu
 	
@@ -246,7 +258,17 @@ class PluginName {
 	 * Renders the options page for this plugin.
 	 */
 	public function plugin_admin_page() {
+
+		ob_start();
+
+		$fields = $this->wpsf
 		include_once( 'views/admin.php' );
+
+		$settings_page = ob_get_contents();
+		ob_clean();
+
+		echo $settings_page;
+
 	} // end plugin_admin_page
 	
 	/*--------------------------------------------*

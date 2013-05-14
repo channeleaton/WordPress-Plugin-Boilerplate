@@ -86,6 +86,9 @@ class PluginName {
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'plugin_textdomain' ) );
 
+		// Load the meta boxes
+		add_action( 'init', array( $this, 'init_metaboxes' ) );
+
     /*
      * Add the options page and menu item.
      * Uncomment the following line to enable the Settings Page for the plugin:
@@ -226,6 +229,21 @@ class PluginName {
 	public function register_plugin_scripts() {
 		wp_enqueue_script( 'plugin-name-plugin-script', plugins_url( 'js/display.min.js', __FILE__ ), array( 'jquery' ) );
 	} // end register_plugin_scripts
+
+	/**
+	 * Initializes the metaboxes. How about that?
+	 */
+	public function init_metaboxes() {
+
+		$meta = new Metaboxes();
+		
+		$meta_boxes = array();
+		$meta_boxes = apply_filters ( 'cmb_meta_boxes' , $meta_boxes );
+		foreach ( $meta_boxes as $meta_box ) {
+			$my_box = new CMB_Init( $meta_box );
+		}
+
+	}
 
 	/**
 	 * Registers the administration menu for this plugin into the WordPress Dashboard menu.

@@ -337,7 +337,7 @@ class PluginName {
 	/**
 	 * Check the plugin GitHub repository for updates.
 	 *
-	 * @todo Change the plugin-folder-name
+	 * @todo Change the plugin-dir-name to the correct value
 	 * @todo Change each instance of 'user' to your Github username
 	 * @todo Change each instance of 'repository' to the repository name
 	 * @todo Change the 'requires' value if needed
@@ -356,7 +356,7 @@ class PluginName {
 
 		$config = array(
 			'slug'               => plugin_basename( __FILE__ ),
-			'proper_folder_name' => 'plugin-folder-name',
+			'proper_folder_name' => 'plugin-dir-name',
 			'api_url'            => 'https://api.github.com/repos/user/repository',
 			'raw_url'            => 'https://raw.github.com/user/repository/master',
 			'github_url'         => 'https://github.com/user/respoitory',

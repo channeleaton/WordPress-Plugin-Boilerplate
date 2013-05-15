@@ -12,6 +12,7 @@ The WordPress Plugin Boilerplate (Extended) is based on [Tom McFarlin's](http://
 * Uses the [WordPress Settings Framework](https://github.com/gilbitron/WordPress-Settings-Framework) to make plugin settings simple as pie.
 * Meta boxes and fields are easier than ever to create with [Custom Metaboxes and Fields](https://github.com/jaredatch/Custom-Metaboxes-and-Fields-for-WordPress)
 * Plugin can update directly from GitHub with the [WordPress GitHub Plugin Updater](https://github.com/jkudish/WordPress-GitHub-Plugin-Updater)
+* JavaScript and CSS are linted with [JSHint][8] and [CSSLint][9]
 
 ## System Requirements
 
@@ -52,12 +53,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
 
+### v0.1
 
+* Added initial extended functionality to the original plugin boilerplate
+* Cleaned up comments based on my practices
 
 ## Author Information
 
 The WordPress Plugin Boilerplate was originally started and is maintained by [Tom McFarlin](http://twitter.com/tommcfarlin/). The extended version was created by [J. Aaron Eaton](http://twitter.com/aaroneaton/).
 
+[8]: http://www.jshint.com/
+[9]: http://csslint.net/
 [10]: http://nodejs.org/
 [11]: https://npmjs.org/
 [12]: http://coffeescript.org/
